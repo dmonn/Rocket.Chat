@@ -1,11 +1,14 @@
 import { Template } from 'meteor/templating';
 import './messageBoxReplyPreview.html';
+import { settings } from '../../../settings/client';
 
 
 Template.messageBoxReplyPreview.helpers({
 	attachments() {
 		const { replyMessageData } = this;
-		return [{ text: replyMessageData.msg, author_name: replyMessageData.u.username }];
+		const useRealName = settings.get('UI_Use_Real_Name');
+		
+		return [{ text: replyMessageData.msg, author_name: useRealName ? replyMessageData.u.name  : replyMessageData.u.username }];
 	},
 });
 
